@@ -31,6 +31,8 @@ public class Fuser {
        private long phonenum;
        @Column(nullable=false)
        private String gender;
+       @Column(nullable=false)
+       private String role;
        
        @OneToMany(mappedBy="fuser")
        private List<Booking> booking;
