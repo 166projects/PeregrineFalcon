@@ -1,7 +1,7 @@
 package com.mphasis.flight.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,9 +20,9 @@ public class Schedule {
     @Column(nullable=false)
     private LocalDate fdate;
     @Column(nullable=false)
-    private LocalDateTime arrival;
+    private LocalTime arrival;
     @Column(nullable=false)
-    private LocalDateTime departure;
+    private LocalTime departure;
     
     @ManyToOne
     @JoinColumn(name="fid")
@@ -38,16 +38,16 @@ public class Schedule {
     }
     
 	
-    public LocalDateTime getArrival() {
+    public LocalTime getArrival() {
                     return arrival;
     }
-    public void setArrival(LocalDateTime arrival) {
+    public void setArrival(LocalTime arrival) {
                     this.arrival = arrival;
     }
-    public LocalDateTime getDeparture() {
+    public LocalTime getDeparture() {
                     return departure;
     }
-    public void setDeparture(LocalDateTime departure) {
+    public void setDeparture(LocalTime departure) {
                     this.departure = departure;
     }
     public Flight getFlight() {

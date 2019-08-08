@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.mphasis.flight.dao.FuserDao;
 import com.mphasis.flight.entities.Fuser;
 import com.mphasis.flight.exceptions.BusinessException;
+
 @Service
 public class FuserBoImpl implements FuserBo{
 
@@ -16,43 +18,62 @@ public class FuserBoImpl implements FuserBo{
 	FuserDao fuserDao;
 	
 	public void register(Fuser fuser) throws BusinessException {
-		 if(fuser.getGender().matches("[mMfF]{1}")) 
+		 if((fuser.getGender().matches("[mMfF]{1}"))&&(fuser.getCemail().matches("^(.+)@(.+)$"))&&(fuser.getCpass().matches("?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40}"))) 
 	        {
 	        	fuserDao.register(fuser);
 	        }
 		 else
-			 throw new BusinessException("entered invalid gender");
+			 throw new BusinessException("entered invalid credentials");
 
 	}
 
 	public Fuser login(int cid, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return fuserDao.login(cid, password);
 	}
 
 	public void changePassword(String oldpass, String newpass, int cid) {
-		// TODO Auto-generated method stub
-
+		   try
+		   {
+			   if(!oldpass.equals(newpass))
+			   
+		       {
+		    	fuserDao.changePassword(oldpass,newpass,cid);
+		      }
+		   
+		    else
+		    {  
+		    	 throw new BusinessException("Old and new passswords should not be same");
+		    }
+		    	
+		    }
+		   catch(BusinessException e)
+		   {
+			   System.out.println(e.getMessage());
+		   }
+			
 	}
 
 	public void addAdmin(Fuser fuser) {
-		// TODO Auto-generated method stub
-
+		fuserDao.addAdmin(fuser);
 	}
 
-	public void deleteAdmin(String id) {
-		// TODO Auto-generated method stub
-
+	public void deleteAdmin(String id) throws BusinessException {
+		if(id!=null)
+		    fuserDao.deleteAdmin(id);
+		else
+			throw new BusinessException("ID does not exist");
+			
 	}
 
 	public void updateAdmin(Fuser fuser) {
-		// TODO Auto-generated method stub
+		fuserDao.updateAdmin(fuser);
 
 	}
 
 	public List<Fuser> getAllAdmins() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return fuserDao.getAllAdmins();
 	}
 
 }
