@@ -25,7 +25,7 @@ public class AppConfig {
 	{
 		DriverManagerDataSource ds=new DriverManagerDataSource();
 		ds.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-		ds.setUrl("jdbc:oracle:thin:@localhost:1521:xe");
+		ds.setUrl("jdbc:oracle:thin:@10.96.177.30:1521:xe");
 		ds.setUsername("bhavya");
 		ds.setPassword("1234");
 		return ds;
@@ -42,7 +42,7 @@ public class AppConfig {
 		props.put("hibernate.hbm2ddl.auto","create");
 		props.put("hibernate.show_sql","true");
 		props.put("hibernate.format_sql","true");
-		props.put("hibernate.default_schema","bhavya");
+		//props.put("hibernate.default_schema","bhavya");
 		sessionFactory.setHibernateProperties(props);
 		sessionFactory.setPackagesToScan("com.mphasis.flight.entities");
 		return sessionFactory;
