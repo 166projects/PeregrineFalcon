@@ -11,7 +11,7 @@ public interface FuserBo {
 	public Fuser login(int cid,String password);
 	public void changePassword(String oldpass,String newpass,int cid);
 	public void addAdmin(Fuser fuser);
-	public void deleteAdmin(String id);
+	public void deleteAdmin(String id)throws BusinessException;
 	public void updateAdmin(Fuser fuser);
 	public List<Fuser> getAllAdmins();
 }
