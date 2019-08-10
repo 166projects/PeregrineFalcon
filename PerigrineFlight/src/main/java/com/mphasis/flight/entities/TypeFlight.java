@@ -1,10 +1,17 @@
 package com.mphasis.flight.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 
-public class TypeFlight {
+public class TypeFlight implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -50,11 +57,6 @@ public class TypeFlight {
 		this.flight = flight;
 	}
 
-	@Override
-	public String toString() {
-		return "TypeFlight [tfid=" + tfid + ", noofseats=" + noofseats + ", typeofseat=" + typeofseat + ", flight="
-				+ flight + "]";
-	}
 	
 	
 	

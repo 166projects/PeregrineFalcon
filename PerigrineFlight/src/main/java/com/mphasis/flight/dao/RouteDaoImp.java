@@ -5,8 +5,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.mphasis.flight.entities.Passenger;
 import com.mphasis.flight.entities.Route;
 
 
@@ -17,7 +20,7 @@ public class RouteDaoImp implements RouteDao {
     SessionFactory sessionFactory;
 	public List<Route> getRoutes() {
 		Session session=sessionFactory.openSession();
-		List<Route> routes=session.createCriteria(Route.class).list();
+		List<Route> routes= session.createCriteria(Route.class).list();
 		return routes;
 	}
 
@@ -26,6 +29,7 @@ public class RouteDaoImp implements RouteDao {
 		Transaction tr=session.beginTransaction();
 		session.save(route);
         tr.commit();
+        session.close();
         
 		
 	}
@@ -55,16 +59,14 @@ public class RouteDaoImp implements RouteDao {
 	public List<Route> getBySource(String source) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-		List<Route> r=null;
-		r=(List<Route>)session.get(Route.class,source);
+		List<Route> r=session.createCriteria(Route.class).add(Restrictions.eq("source",source)).list();
 		return r;
 	}
 
 	public List<Route> getByDestination(String destination) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-		List<Route> r=null;
-		r=(List<Route>)session.get(Route.class,destination);
+		List<Route> r=session.createCriteria(Route.class).add(Restrictions.eq("destination",destination)).list();
 		return r;
 	}
 

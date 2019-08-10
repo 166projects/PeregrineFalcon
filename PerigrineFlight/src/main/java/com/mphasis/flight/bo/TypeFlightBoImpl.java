@@ -11,9 +11,16 @@ public class TypeFlightBoImpl implements TypeFlightBo {
 
 	@Autowired
 	TypeFlightDao typeFlightDao;
-	public String getByTypeofSeat(TypeFlight typeflight) {
+
+	public void addTypeFlight(TypeFlight typeflight) {
+		typeFlightDao.addTypeFlight(typeflight);
 		
-		return typeFlightDao.getByTypeofSeat(typeflight);
 	}
+
+	public int getNoofSeats(String typeofseat) {
+		
+		return typeFlightDao.getNoofSeats(typeofseat);
+	}
+	
 
 }

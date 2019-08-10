@@ -1,15 +1,22 @@
 package com.mphasis.flight.dao;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.mphasis.flight.entities.Passenger;
 import com.mphasis.flight.entities.Schedule;
 
 @Repository
@@ -23,6 +30,24 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		Transaction tr=session.beginTransaction();
 		session.save(schedule);
 		tr.commit();
+		/*Date instant= schedule.getArrival();
+		String t=instant.toString();
+		Date dep=schedule.getDeparture();
+		String de=dep.toString();
+		try {
+			Date fmt=new SimpleDateFormat("HH:mm").parse(t);
+			Date fmt1=new SimpleDateFormat("HH:mm").parse(de);
+			schedule.setArrival(fmt);
+			schedule.setDeparture(fmt1);
+			System.out.println("dao of arrival"+fmt+" "+fmt1);
+			session.save(schedule);
+			tr.commit();
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 
 	}
 
@@ -54,37 +79,39 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
 		Schedule sc= (Schedule) session.get(Schedule.class, id);
-		tr.commit();
+		//tr.commit();
 
 		return sc;
 	}
 
-	public Schedule getScheduleByDate(LocalDate fdate) {
+	public List<Schedule> getScheduleByDate(String fdate) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-		Schedule sc= (Schedule) session.get(Schedule.class, fdate);
+		List<Schedule> sc=session.createCriteria(Schedule.class).add(Restrictions.eq("fdate",fdate)).list();
 		tr.commit();
 
 		return sc;
 	}
 
-	public Schedule getScheduleByArrival(LocalTime arrival) {
+	public List<Schedule> getScheduleByArrival(String arrival) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-		Schedule sc= (Schedule) session.get(Schedule.class, arrival);
+		List<Schedule> sc= session.createCriteria(Schedule.class).add(Restrictions.eq("arrival",arrival)).list();
 		tr.commit();
 
 		return sc;
 	}
 
-	public Schedule getScheduleByDeparture(LocalTime departure) {
+	public List<Schedule> getScheduleByDeparture(String departure) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-		Schedule sc= (Schedule) session.get(Schedule.class, departure);
+		List<Schedule> sc= session.createCriteria(Schedule.class).add(Restrictions.eq("departure",departure)).list();
 		tr.commit();
 
 		return sc;
 	}
+
+	
 	
 
 }

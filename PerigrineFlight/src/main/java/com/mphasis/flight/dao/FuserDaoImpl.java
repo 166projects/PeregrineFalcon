@@ -25,7 +25,7 @@ public class FuserDaoImpl implements FuserDao{
 
 	}
 
-	public Fuser login(int cid, String password) {
+	public Fuser login(String cid, String password) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
 		Fuser fuser=(Fuser) session.get(Fuser.class, cid);
@@ -41,7 +41,7 @@ public class FuserDaoImpl implements FuserDao{
 		
 	}
 
-	public void changePassword(String oldpass, String newpass,int cid) {
+	public void changePassword(String oldpass, String newpass,String cid) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
 		Fuser fuser=(Fuser) session.get(Fuser.class, cid);

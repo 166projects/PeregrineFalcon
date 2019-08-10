@@ -53,7 +53,7 @@ public class PassengerDaoImpl implements PassengerDao{
 		
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-		session.save(passenger);
+		session.update(passenger);
 		tr.commit();
 	}
 

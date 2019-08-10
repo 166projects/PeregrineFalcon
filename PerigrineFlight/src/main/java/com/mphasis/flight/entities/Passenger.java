@@ -1,9 +1,16 @@
 package com.mphasis.flight.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
-public class Passenger {
+public class Passenger implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int pid;
@@ -77,14 +84,5 @@ public class Passenger {
 	public void setPassport(String passport) {
 		this.passport = passport;
 	}
-
-	
-	@Override
-	public String toString() {
-		return "Passenger [pid=" + pid + ", name=" + name + ", gender=" + gender + ", age=" + age + ", phone=" + phone
-				+ ", seatno=" + seatno + ", passport=" + passport +  "]";
-	}
-	
-	
 
 }

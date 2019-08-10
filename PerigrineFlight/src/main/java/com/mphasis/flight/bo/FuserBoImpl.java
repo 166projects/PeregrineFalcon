@@ -27,12 +27,12 @@ public class FuserBoImpl implements FuserBo{
 
 	}
 
-	public Fuser login(int cid, String password) {
+	public Fuser login(String cid, String password) {
 		
 		return fuserDao.login(cid, password);
 	}
 
-	public void changePassword(String oldpass, String newpass, int cid) {
+	public void changePassword(String oldpass, String newpass, String cid) {
 		   try
 		   {
 			   if(!oldpass.equals(newpass))

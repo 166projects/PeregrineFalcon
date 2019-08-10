@@ -4,5 +4,6 @@ import com.mphasis.flight.entities.TypeFlight;
 
 public interface TypeFlightBo {
 
-	public String getByTypeofSeat(TypeFlight typeflight);
+	public void addTypeFlight(TypeFlight typeflight);
+	public int getNoofSeats(String typeofseat);
 }

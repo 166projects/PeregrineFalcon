@@ -8,8 +8,8 @@ import com.mphasis.flight.exceptions.BusinessException;
 public interface FuserBo {
 
 	public void register(Fuser fuser)throws BusinessException;
-	public Fuser login(int cid,String password);
-	public void changePassword(String oldpass,String newpass,int cid);
+	public Fuser login(String cid,String password);
+	public void changePassword(String oldpass,String newpass,String cid);
 	public void addAdmin(Fuser fuser);
 	public void deleteAdmin(String id)throws BusinessException;
 	public void updateAdmin(Fuser fuser);

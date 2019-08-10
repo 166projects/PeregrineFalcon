@@ -1,12 +1,19 @@
 package com.mphasis.flight.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
 
-@Entity
-public class Flight {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
+public class Flight implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int fid;
@@ -14,15 +21,21 @@ public class Flight {
 	private String name;
 	@Column(nullable=false)
 	private int distance;
+	@Column(nullable=false)
+	private String typeofflight;
 	
+	
+
 	@OneToMany(mappedBy="flight")
+	@JsonIgnore
 	private List<TypeFlight> typeflight;
 	
 	@OneToMany(mappedBy="flight")
+	@JsonIgnore
 	//@JoinColumn(name="sid")
 	private List<Schedule> schedule;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	 @JoinColumn(name="rid")
 	private Route route;
 
@@ -76,11 +89,13 @@ public class Flight {
 		this.schedule = schedule;
 	}
 
-	@Override
-	public String toString() {
-		return "Flight [fid=" + fid + ", name=" + name + ", distance=" + distance + ", typeflight=" + typeflight
-				+ ", schedule=" + schedule + ", route=" + route + "]";
+	public String getTypeofflight() {
+		return typeofflight;
 	}
+
+	public void setTypeofflight(String typeofflight) {
+		this.typeofflight = typeofflight;
+	}                             
 
 	
 	

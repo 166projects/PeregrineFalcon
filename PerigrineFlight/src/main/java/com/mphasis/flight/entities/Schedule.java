@@ -1,5 +1,9 @@
 package com.mphasis.flight.entities;
 
+import java.io.Serializable;
+import java.sql.Time;
+import java.util.Date;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -10,19 +14,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="schedules")
-public class Schedule {
+public class Schedule implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
     @Id
     private int sid;
     @Column(nullable=false)
-    private LocalDate fdate;
+    private String fdate;
     @Column(nullable=false)
-    private LocalTime arrival;
+  //  @Temporal(TemporalType.TIME)
+    private String arrival;
+    
     @Column(nullable=false)
-    private LocalTime departure;
+   // @Temporal(TemporalType.TIME)
+    private String departure;
+    
     
     @ManyToOne
     @JoinColumn(name="fid")
@@ -38,16 +55,16 @@ public class Schedule {
     }
     
 	
-    public LocalTime getArrival() {
+    public String getArrival() {
                     return arrival;
     }
-    public void setArrival(LocalTime arrival) {
+    public void setArrival(String arrival) {
                     this.arrival = arrival;
     }
-    public LocalTime getDeparture() {
+    public String getDeparture() {
                     return departure;
     }
-    public void setDeparture(LocalTime departure) {
+    public void setDeparture(String departure) {
                     this.departure = departure;
     }
     public Flight getFlight() {
@@ -56,20 +73,14 @@ public class Schedule {
     public void setFlight(Flight flight) {
                     this.flight = flight;
     }
-    public LocalDate getFdate() {
+    public String getFdate() {
 		return fdate;
 	}
-	public void setF_date(LocalDate fdate) {
+	public void setF_date(String fdate) {
 		this.fdate = fdate;
 	}
-	@Override
-	public String toString() {
-		return "Schedule [sid=" + sid + ", date=" + fdate + ", arrival=" + arrival + ", departure=" + departure
-				+ ", flight=" + flight + "]";
-	}
-    
-    
-    
+	
+	   
 
 }
 

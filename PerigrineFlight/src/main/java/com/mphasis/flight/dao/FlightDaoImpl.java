@@ -24,6 +24,7 @@ public class FlightDaoImpl implements FlightDao{
 		session.save(flight);
 		tr.commit();
 		
+		
 	}
 
 	public void updateFlight(Flight flight) {
@@ -31,6 +32,7 @@ public class FlightDaoImpl implements FlightDao{
 		Transaction tr=session.beginTransaction();
 		session.update(flight);
 		tr.commit();
+		
 		
 	}
 

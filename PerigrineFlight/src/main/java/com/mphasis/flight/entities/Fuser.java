@@ -1,51 +1,68 @@
 package com.mphasis.flight.entities;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mphasis.flight.util.StringPrefixedSequenceIdGenerator;
 
 
 @Entity
-public class Fuser {
+public class Fuser implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-       private int cid;
-	   @Column(nullable=false)
-       private String cname;
-       @Column(unique=true, nullable=false)
-       private String cemail;
-       @Column(nullable=false)
-       private String cpass;
-       @Column(nullable=false)
-       private LocalDate dob;
-       @Column(length=10)
-       private long phonenum;
-       @Column(nullable=false)
-       private String gender;
-       @Column(nullable=false)
-       private String role;
-       
-       @OneToMany(mappedBy="fuser")
-       private List<Booking> booking;
-       
-//       @OneToOne
-//       @JoinColumn(name="rid")
-//       private Route route;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fuser_seq")
+	@GenericGenerator(
+			name = "fuser_seq",
+			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "USER_"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
+	private String cid;
+	@Column(nullable = false)
+	private String cname;
+	@Column(unique = true, nullable = false)
+	private String cemail;
+	@Column(nullable = false)
+	private String cpass;
+	@Column(nullable = false)
+	private String dob;
+	@Column(length = 10)
+	private long phonenum;
+	@Column(nullable = false)
+	private String gender;
+	@Column(nullable = false)
+	private String role;
 
-	public int getCid() {
+	@OneToMany(mappedBy = "fuser")
+	@JsonIgnore
+	private List<Booking> booking;
+
+	// @OneToOne
+	// @JoinColumn(name="rid")
+	// private Route route;
+
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 
@@ -73,11 +90,11 @@ public class Fuser {
 		this.cpass = cpass;
 	}
 
-	public LocalDate getDob() {
+	public String getDob() {
 		return dob;
 	}
 
-	public void setDob(LocalDate dob) {
+	public void setDob(String dob) {
 		this.dob = dob;
 	}
 
@@ -105,19 +122,12 @@ public class Fuser {
 		this.booking = booking;
 	}
 
-//	public Route getRoute() {
-//		return route;
-//	}
-//
-//	public void setRoute(Route route) {
-//		this.route = route;
-//	}
-
-	@Override
-	public String toString() {
-		return "Fuser [cid=" + cid + ", cname=" + cname + ", cemail=" + cemail + ", cpass=" + cpass + ", dob=" + dob
-				+ ", phonenum=" + phonenum + ", gender=" + gender + ", booking=" + booking + " ]";
+	public String getRole() {
+		return role;
 	}
-       
-       
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 }

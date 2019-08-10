@@ -1,11 +1,19 @@
 package com.mphasis.flight.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Route {
+public class Route implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -15,10 +23,9 @@ public class Route {
 	@Column(nullable=false)
 	private String destination;
 	
-	@OneToMany(mappedBy="route")
-
+	@OneToMany(mappedBy="route",fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Flight> flight;
-	
 
 	public int getRid() {
 		return rid;
@@ -52,12 +59,8 @@ public class Route {
 		this.flight = flight;
 	}
 
-	@Override
-	public String toString() {
-		return "Route [rid=" + rid + ", source=" + source + ", destination=" + destination + ", flight=" + flight + "]";
-	}
+	
+	
 
-	
-	
 	
 }

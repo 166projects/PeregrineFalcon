@@ -1,7 +1,10 @@
 package com.mphasis.flight.bo;
 
+import java.sql.Time;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +61,9 @@ public class ScheduleBoImpl implements ScheduleBo {
 		return schedules;
 	}
 
-	public Schedule getScheduleByDate(LocalDate fdate) {
-		Schedule schedules = scheduleDao.getScheduleByDate(fdate);
-		LocalDate currentDate = LocalDate.now();
+	public List<Schedule> getScheduleByDate(String fdate) {
+		List<Schedule> schedules = scheduleDao.getScheduleByDate(fdate);
+		/*LocalDate currentDate = LocalDate.now();
 		if (fdate.isAfter(currentDate) || fdate.isEqual(currentDate)) {
 			if (schedules == null) {
 				try {
@@ -76,12 +79,12 @@ public class ScheduleBoImpl implements ScheduleBo {
 				e.printStackTrace();
 			}
 		}
-
+*/
 		return schedules;
 	}
 
-	public Schedule getScheduleByArrival(LocalTime arrival) {
-		Schedule schedules = scheduleDao.getScheduleByArrival(arrival);
+	public List<Schedule> getScheduleByArrival(String arrival) {
+		List<Schedule> schedules = scheduleDao.getScheduleByArrival(arrival);
 		if (schedules == null) {
 			try {
 				throw new BusinessException("Oops looks like no schedule is present for the given Arrival Date");
@@ -92,8 +95,8 @@ public class ScheduleBoImpl implements ScheduleBo {
 		return schedules;
 	}
 
-	public Schedule getScheduleByDeparture(LocalTime departure) {
-		Schedule schedules = scheduleDao.getScheduleByDeparture(departure);
+	public List<Schedule> getScheduleByDeparture(String departure) {
+		List<Schedule> schedules = scheduleDao.getScheduleByDeparture(departure);
 		if (schedules == null) {
 			try {
 				throw new BusinessException("Oops looks like no schedule is present for the given Departure Date");
