@@ -1,7 +1,6 @@
 package com.mphasis.flight.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;

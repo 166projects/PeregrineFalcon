@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.mphasis.flight.util.StringPrefixedSequenceIdGenerator;
+
 @Entity
 public class Passenger implements Serializable{
 
@@ -12,7 +17,13 @@ public class Passenger implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passenger_seq")
+	@GenericGenerator(
+			name = "passenger_seq",
+			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
 	private int pid;
 	@Column(nullable=false)
 	private String name;

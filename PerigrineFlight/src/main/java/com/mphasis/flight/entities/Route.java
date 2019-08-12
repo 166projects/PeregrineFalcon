@@ -5,7 +5,11 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mphasis.flight.util.StringPrefixedSequenceIdGenerator;
 
 @Entity
 public class Route implements Serializable{
@@ -16,7 +20,13 @@ public class Route implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_seq")
+	@GenericGenerator(
+			name = "route_seq",
+			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
 	private int rid;
 	@Column(nullable=false)
 	private String source;

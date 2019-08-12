@@ -1,5 +1,7 @@
 package com.mphasis.flight.bo;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ public class TypeFlightBoImpl implements TypeFlightBo {
 		
 	}
 
-	public int getNoofSeats(String typeofseat) {
+	public List<TypeFlight> getNoofSeats(String typeofseat,int fid) {
 		
-		return typeFlightDao.getNoofSeats(typeofseat);
+		return typeFlightDao.getNoofSeats(typeofseat,fid);
 	}
 	
-
+    public TypeFlight getById(int tfid) {
+    	return typeFlightDao.getById(tfid);
+    }
 }

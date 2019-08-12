@@ -19,9 +19,9 @@ public class BookingBoImpl implements BookingBo{
 		bookingDao.addBooking(booking);
 	}
 
-	public void deleteBooking(Booking booking) {
+	public void deleteBooking(int bid) {
 		// TODO Auto-generated method stub
-		bookingDao.deleteBooking(booking);
+		bookingDao.deleteBooking(bid);
 	}
 
 	public List<Booking> getAll() {
@@ -41,6 +41,12 @@ public class BookingBoImpl implements BookingBo{
 		// TODO Auto-generated method stub
 		
 		return bookingDao.getById(bid);
+	}
+
+	@Override
+	public int getTotalFare(String bid) {
+		// TODO Auto-generated method stub
+		return bookingDao.getTotalFare(bid);
 	}
 
 }

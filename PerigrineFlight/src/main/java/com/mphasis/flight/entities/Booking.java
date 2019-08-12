@@ -11,6 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.mphasis.flight.util.StringPrefixedSequenceIdGenerator;
+
 @Entity
 public class Booking implements Serializable{
 
@@ -19,8 +24,14 @@ public class Booking implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int bid;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
+	@GenericGenerator(
+			name = "booking_seq",
+			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
+	private String bid;
 	@Column(nullable=false)
 	private int totalfare;
 	
@@ -44,11 +55,11 @@ public class Booking implements Serializable{
 	@JoinColumn(name="tfid")
 	private TypeFlight typeflight;
 
-	public int getBid() {
+	public String getBid() {
 		return bid;
 	}
 
-	public void setBid(int bid) {
+	public void setBid(String bid) {
 		this.bid = bid;
 	}
 

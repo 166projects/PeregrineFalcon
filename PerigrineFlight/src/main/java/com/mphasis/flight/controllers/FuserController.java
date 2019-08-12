@@ -1,8 +1,8 @@
 
 package com.mphasis.flight.controllers;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,7 @@ import com.mphasis.flight.entities.Fuser;
 import com.mphasis.flight.entities.Passenger;
 import com.mphasis.flight.entities.Route;
 import com.mphasis.flight.entities.Schedule;
+import com.mphasis.flight.entities.TypeFlight;
 import com.mphasis.flight.exceptions.BusinessException;
 
 @RestController
@@ -49,35 +50,13 @@ public class FuserController {
        
        //Fuser
        
-       /*@RequestMapping(value="/fusers", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-       public Fuser login(@RequestBody Fuser fuser){
+      
        
-              Fuser fuser1 = fuserBo.login(fuser.getCid(), fuser.getCpass());
-              if(fuser1!=null)
-                     return fuser1;
-              else
-                     return null;
-       }*/
-       
-       
-       
-       /*@SuppressWarnings("unchecked")
-       @RequestMapping(value="/fusers", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-       public List<Fuser> getAll(){
-              
-              List<Fuser> fusers=fuserBo.getAllAdmins();
-              return fusers;
-       }*/
-       
-       @RequestMapping(value="/registeruser", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-       public void addUser(@RequestBody Fuser fuser) throws BusinessException{
-              try {
-                     fuserBo.register(fuser);
-              }catch(BusinessException e) {
-                     throw new BusinessException("Registration Failed");
-              }
-              
-       }
+       @RequestMapping(value="/registeruser",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
+   	public void registerUser(@RequestBody Fuser fuser) throws BusinessException
+   	{
+   			fuserBo.register(fuser);
+   	}
        
        @RequestMapping(value="/updateuser", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
        public void updateUser(@RequestBody Fuser fuser){
@@ -118,10 +97,10 @@ public class FuserController {
               
        }
        
-       @RequestMapping(value="/deletebooking", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
-       public void deleteBooking(@RequestBody Booking booking) throws BusinessException{
+       @RequestMapping(value="/deletebooking/{bid}", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
+       public void deleteBooking(@PathVariable("bid")int bid) throws BusinessException{
               
-                     bookingBo.deleteBooking(booking);             
+                     bookingBo.deleteBooking(bid);             
        }
        
        
@@ -131,6 +110,11 @@ public class FuserController {
               return bookingBo.getById(bid);
        }
        
+       @RequestMapping(value="/gettotalfare/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+       public int getTotalFare(@PathVariable("id")String bid) {
+       
+              return bookingBo.getTotalFare(bid);
+       }
        
        //Flight
        
@@ -227,21 +211,43 @@ public class FuserController {
       	 
     		
     	}
-       @RequestMapping(value="/routebydestination/{destination}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-       public List<Route> getRouteByDestinationUser(@PathVariable("destinatiion")String destination) throws BusinessException{
+       @RequestMapping(value="/routebydestination/{destination}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+     	public List<Route> getRouteByDestination(@PathVariable("destination")String destination) throws BusinessException
+     	{
+        	 List<Route> routes=routeBo.getByDestination(destination);
+    		return routes;
+       	 
+     		
+     	}
        
-              List<Route> routes=routeBo.getByDestination(destination);
-              return routes;
+       @RequestMapping(value="/getnoofseats/{typeofseat}/{fid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+       public int getNoOfSeats(@PathVariable("typeofseat")String typeofseat,@PathVariable("fid")int fid)
+       {
+      	 
+      	 List<TypeFlight> type=new ArrayList<>();
+      	 type=typeFlightBo.getNoofSeats(typeofseat,fid);
+      	 int s=0;
+      	 TypeFlight typeflight=type.get(0);
+      	 Flight flight=typeflight.getFlight();
+      	 if(typeflight.getTypeofseat().equalsIgnoreCase(typeofseat) && flight.getFid()==fid)
+      	 {
+      	 s=typeflight.getNoofseats()-typeflight.getBookedseats();
+      	 }
+      	 else {
+      		 s=0;
+      	 }
+      	 return s;
+      	 
+      	 
        }
        
-       
-       //Type Flight
-       
-       @RequestMapping(value="//{source}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-       public List<Route> getRouteBySource(@PathVariable("source")String source) throws BusinessException{
-       
-              List<Route> routes=routeBo.getBySource(source);
-              return routes;
+//       //Type Flight
+//       
+//       @RequestMapping(value="/{source}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+//       public List<Route> getRouteBySource(@PathVariable("source")String source) throws BusinessException{
+//       
+//              List<Route> routes=routeBo.getBySource(source);
+//              return routes;
        }
-}
+
 

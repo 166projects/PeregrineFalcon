@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.mphasis.flight.dao.TypeFlightDao;
+import com.mphasis.flight.entities.Schedule;
 import com.mphasis.flight.entities.TypeFlight;
 @Repository
 public class TypeFlightDaoImpl implements TypeFlightDao {
@@ -28,18 +29,25 @@ public class TypeFlightDaoImpl implements TypeFlightDao {
 		
 	}
 
-	public int getNoofSeats(String typeofseat) {
+	public List<TypeFlight> getNoofSeats(String typeofseat,int fid) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
-//		@SuppressWarnings("deprecation")
-//		TypeFlight typeflight= (TypeFlight) session.createCriteria(TypeFlight.class).add(Restrictions.eq("typeofseat",typeofseat));
-//		
-//		String s=typeflight.toString();
-//		tr.commit();
-//		return s;
-	String noofseats = (String) session.createQuery("select noofseats from typeflight t where t.typeofseat = :typeofseat").setParameter("typeofseat",typeofseat).uniqueResult();
-		return Integer.parseInt(noofseats);
+		
+		
+		List<TypeFlight> typeflight=session.createCriteria(TypeFlight.class).add(Restrictions.eq("typeofseat",typeofseat)).list();	
+		
+		
+		/*String noofseats=typeflight.get(type.getNoofseats()).toString();
+		String bookedseats=typeflight.get(type.getBookedseats()).toString();
+		int available=Integer.parseInt(noofseats)-Integer.parseInt(bookedseats);*/
+		return typeflight;
+		
 	}
 	
-
+	public TypeFlight getById(int tfid) {
+		Session session=sessionFactory.openSession();
+		Transaction tr=session.beginTransaction();
+		TypeFlight typeflight=session.get(TypeFlight.class, tfid);
+		return typeflight;
+	}
 }

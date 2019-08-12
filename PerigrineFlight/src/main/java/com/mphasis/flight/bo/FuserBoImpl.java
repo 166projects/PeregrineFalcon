@@ -18,13 +18,23 @@ public class FuserBoImpl implements FuserBo{
 	FuserDao fuserDao;
 	
 	public void register(Fuser fuser) throws BusinessException {
-		 if((fuser.getGender().matches("[mMfF]{1}"))&&(fuser.getCemail().matches("^(.+)@(.+)$"))&&(fuser.getCpass().matches("?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40}"))) 
+		 if((fuser.getGender().matches("[mMfF]{1}")))
+		{
+				 
+		  if(fuser.getCemail().matches("^(.+)@(.+)$")) 
+		 {
+			 if (fuser.getCpass().matches( "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})"))
 	        {
 	        	fuserDao.register(fuser);
 	        }
 		 else
-			 throw new BusinessException("entered invalid credentials");
+			 throw new BusinessException("enter valid password");
+		 }
+		
+		 else throw new BusinessException("enter valid email");
+	}
 
+		 else throw new BusinessException("enter valid gender");
 	}
 
 	public Fuser login(String cid, String password) {

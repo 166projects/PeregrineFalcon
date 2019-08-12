@@ -1,23 +1,21 @@
 package com.mphasis.flight.entities;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.util.Date;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import com.mphasis.flight.util.StringPrefixedSequenceIdGenerator;
 
 @Entity
 @Table(name="schedules")
@@ -29,6 +27,13 @@ public class Schedule implements Serializable{
 	private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schedule_seq")
+	@GenericGenerator(
+			name = "schedule_seq",
+			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
     private int sid;
     @Column(nullable=false)
     private String fdate;

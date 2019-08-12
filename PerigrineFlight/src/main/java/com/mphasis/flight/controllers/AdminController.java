@@ -1,13 +1,9 @@
 package com.mphasis.flight.controllers;
 
-import java.sql.Time;
-import java.time.Instant;
-import java.time.LocalDate;
 
-import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
-
-
+import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -52,10 +48,10 @@ public class AdminController {
 	@Autowired
 	BookingBo bookingBo;
 	
-	@RequestMapping(value="/login",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public void loginAdmin(@RequestBody String cid,@RequestBody String password)
+	@RequestMapping(value="/login/{cid}/{password}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public Fuser loginAdmin(@PathVariable("cid")String cid,@PathVariable("password")String password)
 	{
-		fuserBo.login(cid, password);
+		return fuserBo.login(cid, password);
     }
 	
 	@RequestMapping(value="/changepassword/{oldpass}/{newpass}/{cid}",method=RequestMethod.PUT,produces=MediaType.APPLICATION_JSON_VALUE)
@@ -90,7 +86,7 @@ public class AdminController {
 		fuserBo.updateAdmin(fuser);
 	}
 	
-	@RequestMapping(value="/getalladmin",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/getallusers",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Fuser> getAllAdmins()
 	{
 		List<Fuser> fusers=fuserBo.getAllAdmins();
@@ -261,17 +257,59 @@ public class AdminController {
     	 typeFlightBo.addTypeFlight(typeflight);
      }
      
-     @RequestMapping(value="/getnoofseats/{typeofseat}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-     public int getNoOfSeats(@PathVariable("typeofseat")String typeofseat)
+     @RequestMapping(value="/getnoofseats/{typeofseat}/{fid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+     public int getNoOfSeats(@PathVariable("typeofseat")String typeofseat,@PathVariable("fid")int fid)
      {
     	 
-    	 int s=typeFlightBo.getNoofSeats(typeofseat);
+    	 List<TypeFlight> type=new ArrayList<>();
+    	 type=typeFlightBo.getNoofSeats(typeofseat,fid);
+    	 int s=0;
+    	 TypeFlight typeflight=type.get(0);
+    	 Flight flight=typeflight.getFlight();
+    	 if(typeflight.getTypeofseat().equalsIgnoreCase(typeofseat) && flight.getFid()==fid)
+    	 {
+    	 s=typeflight.getNoofseats()-typeflight.getBookedseats();
+    	 }
+    	 else {
+    		 s=0;
+    	 }
     	 return s;
     	 
     	 
      }
      
+     @RequestMapping(value = "/getallcustomers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+     public List<Fuser> getAllCustomers() {
+            List<Fuser> fuser = fuserBo.getAllAdmins();
+            final List<Fuser> list = new ArrayList<Fuser>();
+
+            fuser.stream().forEach(new Consumer<Fuser>() {
+                   public void accept(Fuser e) {
+                         if (e.getRole().equalsIgnoreCase("customer")) {
+                                list.add(e);
+                         }
+                   }
+            });
+            return list;
+     }
      
+     @RequestMapping(value = "/getalladmins", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+     public List<Fuser> getAllAdmin() {
+            List<Fuser> admin = fuserBo.getAllAdmins();
+            final List<Fuser> list = new ArrayList<Fuser>();
+
+            admin.stream().forEach(new Consumer<Fuser>() {
+                   public void accept(Fuser e) {
+                         if (e.getRole().equalsIgnoreCase("admin")) {
+                                list.add(e);
+                         }
+                   }
+            });
+            return list;
+     }
+
+
+
      
 }
 

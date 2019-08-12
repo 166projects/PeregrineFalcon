@@ -5,7 +5,11 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mphasis.flight.util.StringPrefixedSequenceIdGenerator;
 
 @Entity
 public class Flight implements Serializable{
@@ -15,7 +19,14 @@ public class Flight implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	/*@GeneratedValue(strategy = GenerationType.AUTO, generator = "flight_seq")
+	@GenericGenerator(
+			name = "flight_seq",
+			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
+			parameters = {
+					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})*/
 	private int fid;
 	@Column(nullable=false)
 	private String name;

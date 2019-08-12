@@ -2,6 +2,7 @@ package com.mphasis.flight.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -62,6 +63,7 @@ public class PassengerDaoImpl implements PassengerDao{
 		Transaction tr=session.beginTransaction();
 		session.save(passenger);
 		tr.commit();
+		
 		
 	}
 
