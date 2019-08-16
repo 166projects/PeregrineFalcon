@@ -1,0 +1,24 @@
+.flybut
+{
+    width: 80px;
+    height: 30px;
+    background-color: aqua;
+    border-radius: 5px;
+    position: relative;
+    top : 0px;
+    left : 100px; 
+    animation: fly 1s 1;
+}
+@keyframes fly
+{
+   0%
+   {
+       top: -300px;
+       transform: rotate(3600deg); 
+   }
+   100%
+   {
+       top : 0px;
+       transform: rotate(2400deg);
+   }
+}

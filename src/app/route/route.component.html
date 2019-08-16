@@ -1,0 +1,31 @@
+ 
+    <!-- <p>Select route </p>
+    <select id="route" required #route="ngModel" name="route" [(ngModel)]="source" >
+        <option value="-1">Select Source</option>
+        <option *ngFor="let ru of routes" [value]="ru.source">{{ru.source}}</option>
+      </select>
+      <br/> -->
+<!-- Domestic:
+<br/>
+Available sources:
+      <ul>
+          <li>Bangalore</li>
+          <li>Chennai</li>
+          <li>Hyderabad</li>
+          <li>Pune</li>
+          <li>Delhi</li>
+          <li>Mumbai</li>
+      </ul>
+<br/>
+<br/> -->
+<p>Logged as<span> {{fuser.cname}}</span></p>
+
+<!-- <form (ngSubmit)="getflightdetails()">
+Source <input type="text" name="src"  placeholder="enter source" [(ngModel)]="source"/>&nbsp;
+Destination <input type="text" name="des" placeholder="enter destination" [(ngModel)]="destination"/>
+<br/>
+<br/>
+<!-- <button name="searchflight" value="searchflight">Search Flights</button> -->
+<!-- <button (click)="onSubmit()">Search Flights</button>
+</form> --> 
+<button (click)="onSubmit()">View Flights</button>

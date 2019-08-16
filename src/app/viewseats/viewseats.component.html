@@ -1,0 +1,56 @@
+<!-- <div>
+        <select id="typeofseat" #typeofseat="ngModel" name="typeofseat" [(ngModel)]="value">
+    <option  [value]="economy">
+        Economy          
+    </option>
+    <option  [value]="business">
+        Business          
+    </option>
+    <option  [value]="firstclass">
+        First Class          
+    </option>
+    </select>
+    </div> -->
+<div style="float:left">
+<form (ngSubmit)="getnoofeconomyseats()">
+        <div>
+            
+           <button type="submit">Economy Class  {{enoofseats}}</button>&nbsp;&nbsp;
+           <!-- <button (click)="onSubmit()">Get Number Of Seats</button> -->
+           <button (click)="onSubmit()">Book Economy ticket</button>
+        </div>
+</form>
+</div>
+<br/>
+<br/>
+<div style="float:left">
+<form  (ngSubmit)="getnoofbusinessseats()">
+        <div>
+          
+          <button type="submit">Business Class {{bnoofseats}}</button>&nbsp;&nbsp;
+          <!-- <button (click)="onSubmit()">Get Number Of Seats</button> -->
+          <button (click)="onSubmit()">Book Business ticket</button>
+        </div>
+  </form>
+</div>
+<br/>
+<br/>
+<div style="float:left">
+  <form  (ngSubmit)="getnooffclassseats()">
+        <div>
+            
+          <button type="submit">First Class  {{fnoofseats}}</button>&nbsp;&nbsp;
+          <!-- <button (click)="onSubmit()">Get Number Of Seats</button> -->
+          <button (click)="onSubmit()">Book FirstClass ticket</button>
+        </div>
+  </form>
+</div>
+
+
+
+<!-- <br/>
+<br/>
+  <div>
+        <!-- <button type="submit">Get Number Of Seats</button> -->
+        <!-- <button (click)="onSubmit()">Book Ticket</button>
+      </div> --> 

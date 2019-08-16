@@ -1,0 +1,29 @@
+
+
+
+  <table border="2px" item-width="50%">
+  <tr>
+    <th>Flight Name</th>
+    <th>Arrival Time</th>
+    <th>Departure Time</th>
+    <th>Journey Date</th>
+    <th>Source</th>
+    <th>Destination</th>
+    <th>Booking</th>
+
+    
+  </tr>
+    <tr *ngFor = 'let sch of member'>
+        <td>{{sch.flight.name}}</td> 
+        <td>{{sch.arrival}}</td>
+        <td>{{sch.departure }}</td>
+        <td>{{sch.fdate}}</td>
+        <td>{{sch.flight.route.source}}</td>
+        <td>{{sch.flight.route.destination}}</td>
+        <td><button (click)="onSubmit()">View Seats</button></td>
+      </tr>
+
+    </table>
+    <router-outlet></router-outlet>
+   
+    
