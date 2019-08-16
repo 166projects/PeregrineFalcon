@@ -22,7 +22,7 @@ public class FlightBoImpl implements FlightBo{
 		
 	}
 
-	public void deleteFlight(int id) {
+	public void deleteFlight(String id) {
 		flightDao.deleteFlight(id);
 	}
 
@@ -31,7 +31,7 @@ public class FlightBoImpl implements FlightBo{
 		return flightDao.getAllFlights();
 	}
 
-	public Flight getById(int id) {
+	public Flight getById(String id) {
 		
 		return flightDao.getById(id);
 	}

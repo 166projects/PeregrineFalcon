@@ -54,7 +54,7 @@ public class BookingDaoImpl implements BookingDao{
 		tr.commit();
 	}
 
-	public void deleteBooking(int bid) {
+	public void deleteBooking(String bid) {
 		// TODO Auto-generated method stub
 		Session session=sessionfactory.openSession();
 		Transaction tr=session.beginTransaction();
@@ -73,7 +73,7 @@ public class BookingDaoImpl implements BookingDao{
 		return booking;
 	}
 
-	public Booking getById(int bid) {
+	public Booking getById(String bid) {
 		// TODO Auto-generated method stub
 		Session session=sessionfactory.openSession();
 		Transaction tr=session.beginTransaction();
@@ -88,11 +88,11 @@ public class BookingDaoImpl implements BookingDao{
         Transaction tr=session.beginTransaction();
         //System.out.println("salary increment");
        
-       booking= session.createCriteria(Booking.class).add(Restrictions.eq("bid",bid)).list();
-       
-      booking1=booking.get(0);
-       typeflight=booking1.getTypeflight();
-       schedule=booking1.getSchedule();
+      /* booking= session.createCriteria(Booking.class).add(Restrictions.eq("bid",bid)).list();*/
+        Booking booking=null;
+		booking= (Booking) session.get(Booking.class, bid);
+       typeflight=booking.getTypeflight();
+       schedule=booking.getSchedule();
             
         flight=schedule.getFlight();
         System.out.println("dis-"+flight.getDistance());
@@ -104,11 +104,12 @@ public class BookingDaoImpl implements BookingDao{
         count.registerParameter("typeofseat", String.class, ParameterMode.IN).bindValue(typeflight.getTypeofseat());
         count.registerParameter("arr", String.class, ParameterMode.IN).bindValue(schedule.getArrival());
         count.registerParameter("departure", String.class, ParameterMode.IN).bindValue(schedule.getDeparture());
-        count.registerParameter("totalfare", Integer.class, ParameterMode.OUT);
+        count.registerParameter("total_fare", Integer.class, ParameterMode.OUT);
         ProcedureOutputs procedureResult=count.getOutputs();
-        int fare_cal=(int) procedureResult.getOutputParameterValue("totalfare");
-        session.update(fare_cal);
+        int fare_cal=(int) procedureResult.getOutputParameterValue("total_fare");
         System.out.print(fare_cal);
+        session.save(fare_cal);
+       
         tr.commit();
 		return fare_cal;
 	}

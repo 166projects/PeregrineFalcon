@@ -113,8 +113,8 @@ public class AdminController {
 		return bookings;
 	}
 	
-	@RequestMapping(value="/booking/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public Booking getBookingById(@PathVariable("id")int bid)
+	@RequestMapping(value="/bookingbyid/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public Booking getBookingById(@PathVariable("id")String bid)
 	{
 		return bookingBo.getById(bid);
 	}
@@ -133,7 +133,7 @@ public class AdminController {
  	}
      
      @RequestMapping(value="/deleteschedule/{sid}",method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
- 	public void deleteSchedule(@PathVariable("sid")int sid)
+ 	public void deleteSchedule(@PathVariable("sid")String sid)
  	{
  		scheduleBo.deleteSchedule(sid);
  	}
@@ -147,7 +147,7 @@ public class AdminController {
  	}
      
      @RequestMapping(value="/schedulebyid/{sid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
- 	public Schedule getScheduleById(@PathVariable("sid")int sid)
+ 	public Schedule getScheduleById(@PathVariable("sid")String sid)
  	{
  		return scheduleBo.getScheduleById(sid);
  	}
@@ -188,7 +188,7 @@ public class AdminController {
   	}
      
      @RequestMapping(value="/deleteroute/{rid}",method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
-   	public void deleteRoute(@PathVariable int rid)
+   	public void deleteRoute(@PathVariable String rid)
    	{
      	 routeBo.removeRoute(rid);
      	
@@ -232,7 +232,7 @@ public class AdminController {
    	
  	}
      @RequestMapping(value="/deleteflight/{fid}",method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
-    	public void deleteFlight(@PathVariable("fid") int fid)
+    	public void deleteFlight(@PathVariable("fid") String fid)
     	{
       	 flightBo.deleteFlight(fid);
       	
@@ -244,8 +244,8 @@ public class AdminController {
     	 return flights;
   	}
      
-     @RequestMapping(value="/getflight/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
- 	public Flight getFlightById(@PathVariable("id")int id) throws BusinessException
+     @RequestMapping(value="/getflightbyid/{id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+ 	public Flight getFlightById(@PathVariable("id")String id) throws BusinessException
  	{
     	 Flight flights=flightBo.getById(id);
 		return flights;
@@ -257,26 +257,7 @@ public class AdminController {
     	 typeFlightBo.addTypeFlight(typeflight);
      }
      
-     @RequestMapping(value="/getnoofseats/{typeofseat}/{fid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-     public int getNoOfSeats(@PathVariable("typeofseat")String typeofseat,@PathVariable("fid")int fid)
-     {
-    	 
-    	 List<TypeFlight> type=new ArrayList<>();
-    	 type=typeFlightBo.getNoofSeats(typeofseat,fid);
-    	 int s=0;
-    	 TypeFlight typeflight=type.get(0);
-    	 Flight flight=typeflight.getFlight();
-    	 if(typeflight.getTypeofseat().equalsIgnoreCase(typeofseat) && flight.getFid()==fid)
-    	 {
-    	 s=typeflight.getNoofseats()-typeflight.getBookedseats();
-    	 }
-    	 else {
-    		 s=0;
-    	 }
-    	 return s;
-    	 
-    	 
-     }
+    
      
      @RequestMapping(value = "/getallcustomers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
      public List<Fuser> getAllCustomers() {

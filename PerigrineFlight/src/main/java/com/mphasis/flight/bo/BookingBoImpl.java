@@ -19,7 +19,7 @@ public class BookingBoImpl implements BookingBo{
 		bookingDao.addBooking(booking);
 	}
 
-	public void deleteBooking(int bid) {
+	public void deleteBooking(String bid) {
 		// TODO Auto-generated method stub
 		bookingDao.deleteBooking(bid);
 	}
@@ -37,7 +37,7 @@ public class BookingBoImpl implements BookingBo{
 		return booking;	
 	}
 
-	public Booking getById(int bid) {
+	public Booking getById(String bid) {
 		// TODO Auto-generated method stub
 		
 		return bookingDao.getById(bid);

@@ -67,7 +67,7 @@ public class PassengerDaoImpl implements PassengerDao{
 		
 	}
 
-	public void deletePassenger(int id) {
+	public void deletePassenger(String id) {
 		
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();

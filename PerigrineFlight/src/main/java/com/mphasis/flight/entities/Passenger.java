@@ -17,14 +17,15 @@ public class Passenger implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "passenger_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pass_seq")
 	@GenericGenerator(
-			name = "passenger_seq",
+			name = "pass_seq",
 			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
 			parameters = {
 					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "P_"),
 					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
-	private int pid;
+	private String pid;
 	@Column(nullable=false)
 	private String name;
 	@Column(nullable=false)
@@ -40,11 +41,11 @@ public class Passenger implements Serializable{
 	
 	
 
-	public int getPid() {
+	public String getPid() {
 		return pid;
 	}
 
-	public void setPid(int pid) {
+	public void setPid(String pid) {
 		this.pid = pid;
 	}
 

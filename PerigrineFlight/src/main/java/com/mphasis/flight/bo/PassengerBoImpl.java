@@ -45,7 +45,7 @@ public class PassengerBoImpl implements PassengerBo {
 	
 	}
 
-	public void deletePassenger(int id) {
+	public void deletePassenger(String id) {
 		
 		passengerDao.deletePassenger(id);
 	}

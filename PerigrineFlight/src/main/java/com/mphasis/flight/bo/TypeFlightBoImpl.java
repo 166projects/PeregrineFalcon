@@ -19,12 +19,12 @@ public class TypeFlightBoImpl implements TypeFlightBo {
 		
 	}
 
-	public List<TypeFlight> getNoofSeats(String typeofseat,int fid) {
+	public List<TypeFlight> getNoofSeats(String typeofseat,String fid) {
 		
 		return typeFlightDao.getNoofSeats(typeofseat,fid);
 	}
 	
-    public TypeFlight getById(int tfid) {
+    public TypeFlight getById(String tfid) {
     	return typeFlightDao.getById(tfid);
     }
 }

@@ -32,7 +32,7 @@ public class ScheduleBoImpl implements ScheduleBo {
 
 	}
 
-	public void deleteSchedule(int id) {
+	public void deleteSchedule(String id) {
 		scheduleDao.deleteSchedule(id);
 
 	}
@@ -49,7 +49,7 @@ public class ScheduleBoImpl implements ScheduleBo {
 		return schedules;
 	}
 
-	public Schedule getScheduleById(int id) {
+	public Schedule getScheduleById(String id) {
 		Schedule schedules = scheduleDao.getScheduleById(id);
 		if (schedules == null) {
 			try {

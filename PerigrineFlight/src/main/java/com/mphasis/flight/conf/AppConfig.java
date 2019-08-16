@@ -8,10 +8,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebMvc
@@ -55,4 +58,17 @@ public class AppConfig {
 		hibernateTransactionManager.setSessionFactory(sessionFactory);
 		return hibernateTransactionManager;
 	}
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+         return new WebMvcConfigurerAdapter() {
+             public void addCorsMappings(CorsRegistry registry) {
+                  registry.addMapping("/**")
+                  .allowedOrigins("*")
+                  .allowedMethods("HEAD", "GET", "POST", "PUT", "DELETE")
+                  .allowedHeaders( "Origin",
+                            "X-Requested-With", "Content-Type", "Accept","Authorization","Access-Control-Allow-Origin");
+             }
+         };
+    }
+
 }

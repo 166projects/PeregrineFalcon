@@ -37,7 +37,7 @@ public class RouteBoImp implements RouteBo {
 		
 	}
 
-	public void removeRoute(int rid) {
+	public void removeRoute(String rid) {
 	    routeDao.deleteRoute(rid);
 		
 	}
@@ -59,5 +59,11 @@ public class RouteBoImp implements RouteBo {
 		
 		return routeDao.getByDestination(destination);
 	}
+	
+	public List<Route> getBySourceDestination(String source, String destination) {
+        // TODO Auto-generated method stub
+        return routeDao.getBySourceDestination(source, destination);
+          }
+
 
 }

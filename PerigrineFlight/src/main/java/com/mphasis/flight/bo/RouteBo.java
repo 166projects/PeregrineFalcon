@@ -9,9 +9,9 @@ public interface RouteBo {
 	public List<Route> getRoutes();
 	public void insertRoute(Route route);
 	public void editRoute(Route route);
-	public void removeRoute(int rid);
+	public void removeRoute(String rid);
 	public List<Route> getBySource(String source) throws BusinessException;
 	public List<Route> getByDestination(String destination) throws BusinessException;
-
+	public List<Route> getBySourceDestination(String source,String destination);
 }
  

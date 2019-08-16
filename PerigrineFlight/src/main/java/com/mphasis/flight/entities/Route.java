@@ -20,14 +20,16 @@ public class Route implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "route_seq")
 	@GenericGenerator(
 			name = "route_seq",
 			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
 			parameters = {
 					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "R_"),
 					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
-	private int rid;
+	private String rid;
 	@Column(nullable=false)
 	private String source;
 	@Column(nullable=false)
@@ -37,11 +39,11 @@ public class Route implements Serializable{
 	@JsonIgnore
 	private List<Flight> flight;
 
-	public int getRid() {
+	public String getRid() {
 		return rid;
 	}
 
-	public void setRid(int rid) {
+	public void setRid(String rid) {
 		this.rid = rid;
 	}
 

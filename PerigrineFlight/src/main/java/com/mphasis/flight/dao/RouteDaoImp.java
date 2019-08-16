@@ -44,7 +44,7 @@ public class RouteDaoImp implements RouteDao {
 		
 	}
 
-	public void deleteRoute(int rid) {
+	public void deleteRoute(String rid) {
 		Session session=sessionFactory.openSession();
 		Transaction tr=session.beginTransaction();
 		Route r=(Route) session.get(Route.class,rid);
@@ -69,6 +69,16 @@ public class RouteDaoImp implements RouteDao {
 		List<Route> r=session.createCriteria(Route.class).add(Restrictions.eq("destination",destination)).list();
 		return r;
 	}
+	
+	public List<Route> getBySourceDestination(String source, String destination) {
+        // TODO Auto-generated method stub
+        Session session=sessionFactory.openSession();
+        Transaction tr=session.beginTransaction();
+        List<Route> r=session.createCriteria(Route.class).add(Restrictions.eq("source", source)).add(Restrictions.eq("destination", destination)).list();
+        
+        return r;
+ }
+
 
 	
 }

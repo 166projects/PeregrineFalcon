@@ -24,12 +24,13 @@ public class Booking implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
 	@GenericGenerator(
-			name = "booking_seq",
+			name = "book_seq",
 			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
 			parameters = {
 					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "B_"),
 					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
 	private String bid;
 	@Column(nullable=false)

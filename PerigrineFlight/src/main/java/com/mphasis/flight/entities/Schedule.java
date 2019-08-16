@@ -27,14 +27,15 @@ public class Schedule implements Serializable{
 	private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "schedule_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sched_seq")
 	@GenericGenerator(
-			name = "schedule_seq",
+			name = "sched_seq",
 			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
 			parameters = {
 					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "S_"),
 					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
-    private int sid;
+    private String sid;
     @Column(nullable=false)
     private String fdate;
     @Column(nullable=false)
@@ -52,10 +53,10 @@ public class Schedule implements Serializable{
     
     
     
-    public int getSid() {
+    public String getSid() {
                     return sid;
     }
-    public void setSid(int sid) {
+    public void setSid(String sid) {
                     this.sid = sid;
     }
     

@@ -19,15 +19,16 @@ public class Flight implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	/*@GeneratedValue(strategy = GenerationType.AUTO, generator = "flight_seq")
+	
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "flight_seq")
 	@GenericGenerator(
 			name = "flight_seq",
 			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
 			parameters = {
 					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})*/
-	private int fid;
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "F_"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
+	private String fid;
 	@Column(nullable=false)
 	private String name;
 	@Column(nullable=false)
@@ -58,11 +59,11 @@ public class Flight implements Serializable{
 		this.route = route;
 	}
 
-	public int getFid() {
+	public String getFid() {
 		return fid;
 	}
 
-	public void setFid(int fid) {
+	public void setFid(String fid) {
 		this.fid = fid;
 	}
 

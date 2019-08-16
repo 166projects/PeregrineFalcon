@@ -14,5 +14,5 @@ public interface PassengerBo {
 	public List<Passenger> getByAge(int age);
 	public void updatePassenger(Passenger passenger);
 	public void addPassenger(Passenger passenger);
-	public void deletePassenger(int id);
+	public void deletePassenger(String id);
 }

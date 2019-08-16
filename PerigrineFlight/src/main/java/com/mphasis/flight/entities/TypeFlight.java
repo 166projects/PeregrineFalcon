@@ -19,15 +19,15 @@ public class TypeFlight implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	/*@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "typeflight_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tf_seq")
 	@GenericGenerator(
-			name = "typeflight_seq",
+			name = "tf_seq",
 			strategy = "com.mphasis.flight.util.StringPrefixedSequenceIdGenerator",
 			parameters = {
 					@Parameter(name = StringPrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1"),
-					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})*/
-	private int tfid;
+					@Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "TF_"),
+					@Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%03d")})
+	private String tfid;
 	@Column(nullable=false)
 	private int noofseats;
 	@Column(nullable=false)
@@ -39,11 +39,11 @@ public class TypeFlight implements Serializable{
 	@JoinColumn(name="fid")
 	private Flight flight;
 
-	public int getTfid() {
+	public String getTfid() {
 		return tfid;
 	}
 
-	public void setTfid(int tfid) {
+	public void setTfid(String tfid) {
 		this.tfid = tfid;
 	}
 

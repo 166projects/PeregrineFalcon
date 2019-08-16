@@ -55,6 +55,7 @@ public class FuserController {
        @RequestMapping(value="/registeruser",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE)
    	public void registerUser(@RequestBody Fuser fuser) throws BusinessException
    	{
+    	   System.out.println(fuser.getCemail()+" "+fuser.getGender());
    			fuserBo.register(fuser);
    	}
        
@@ -74,13 +75,7 @@ public class FuserController {
               }
        }
        
-//       @RequestMapping(value="/fusers/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-//       public Fuser getFuserById(@PathVariable("id")String cid) throws BusinessException{
-//       
-//              return fuserBo.getById(cid);
-//       }
-       
-       @RequestMapping(value="/fusers/{opass}/{npass}/{id}", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
+       @RequestMapping(value="/changepassword/{opass}/{npass}/{id}", method=RequestMethod.PUT, produces=MediaType.APPLICATION_JSON_VALUE)
        public void changeUserPassword(@PathVariable("opass")String opass, @PathVariable("npass")String npass, @PathVariable("id")String cid) throws BusinessException{
        
               fuserBo.changePassword(opass, npass, cid);
@@ -98,14 +93,14 @@ public class FuserController {
        }
        
        @RequestMapping(value="/deletebooking/{bid}", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
-       public void deleteBooking(@PathVariable("bid")int bid) throws BusinessException{
+       public void deleteBooking(@PathVariable("bid")String bid) throws BusinessException{
               
                      bookingBo.deleteBooking(bid);             
        }
        
        
-       @RequestMapping(value="/booking/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-       public Booking getBookingById(@PathVariable("id")int bid) throws BusinessException{
+       @RequestMapping(value="/getBookingbyid/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+       public Booking getBookingById(@PathVariable("id")String bid) throws BusinessException{
        
               return bookingBo.getById(bid);
        }
@@ -118,22 +113,22 @@ public class FuserController {
        
        //Flight
        
-       @RequestMapping(value="/flights", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+       @RequestMapping(value="/getflights", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
        public List<Flight> getAll(){
               
               List<Flight> flights=flightBo.getAllFlights();
               return flights;
        }
        
-       @RequestMapping(value="/flight/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-       public Flight getFlightById(@PathVariable("id")int fid) throws BusinessException{
+       @RequestMapping(value="/flightbyid/{id}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+       public Flight getFlightById(@PathVariable("id")String fid) throws BusinessException{
        
               return flightBo.getById(fid);
        }
        
        //Schedule
        
-       @RequestMapping(value="/schedules", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+       @RequestMapping(value="/getallschedules", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
        public List<Schedule> getAllSchedules(){
               
               List<Schedule> schedules=scheduleBo.getSchedules();
@@ -141,7 +136,7 @@ public class FuserController {
        }
        
        @RequestMapping(value="/schedulebyid/{sid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-    	public Schedule getScheduleById(@PathVariable("sid")int sid)
+    	public Schedule getScheduleById(@PathVariable("sid")String sid)
     	{
     		return scheduleBo.getScheduleById(sid);
     	}
@@ -169,7 +164,7 @@ public class FuserController {
        
        
        //passenger
-       @RequestMapping(value="/passenger/{name}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+       @RequestMapping(value="/passengerbyname/{name}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
        public List<Passenger> getPassengerByName(@PathVariable("name")String name) throws BusinessException{
        
               List<Passenger> passengers=passengerBo.getByName(name);
@@ -189,7 +184,7 @@ public class FuserController {
        }
        
        @RequestMapping(value="/cancelticket/{id}", method=RequestMethod.DELETE, produces=MediaType.APPLICATION_JSON_VALUE)
-       public void deletePassenger(@PathVariable("id")int pid) throws BusinessException{
+       public void deletePassenger(@PathVariable("id")String pid) throws BusinessException{
               
                      passengerBo.deletePassenger(pid);       
        }
@@ -220,34 +215,62 @@ public class FuserController {
      		
      	}
        
-       @RequestMapping(value="/getnoofseats/{typeofseat}/{fid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-       public int getNoOfSeats(@PathVariable("typeofseat")String typeofseat,@PathVariable("fid")int fid)
-       {
-      	 
-      	 List<TypeFlight> type=new ArrayList<>();
-      	 type=typeFlightBo.getNoofSeats(typeofseat,fid);
-      	 int s=0;
-      	 TypeFlight typeflight=type.get(0);
-      	 Flight flight=typeflight.getFlight();
-      	 if(typeflight.getTypeofseat().equalsIgnoreCase(typeofseat) && flight.getFid()==fid)
-      	 {
-      	 s=typeflight.getNoofseats()-typeflight.getBookedseats();
-      	 }
-      	 else {
-      		 s=0;
-      	 }
-      	 return s;
-      	 
-      	 
-       }
        
-//       //Type Flight
-//       
-//       @RequestMapping(value="/{source}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-//       public List<Route> getRouteBySource(@PathVariable("source")String source) throws BusinessException{
-//       
-//              List<Route> routes=routeBo.getBySource(source);
-//              return routes;
+       @RequestMapping(value="/getnoofseats/{typeofseat}/{fid}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+       public int getNoOfSeats(@PathVariable("typeofseat")String typeofseat,@PathVariable("fid")String fid)
+       {
+  
+      	List<TypeFlight> type=new ArrayList<TypeFlight>();
+        type=typeFlightBo.getNoofSeats(typeofseat,fid);
+        int bs=0,ns=0;
+        for(TypeFlight t:type)
+        {
+               Flight f=t.getFlight();
+               if(f.getFid().equalsIgnoreCase(fid))
+               {
+                      bs=t.getBookedseats();
+                      ns=t.getNoofseats();
+                      break;
+               }
+        }
+        return ns-bs;
+        }
+       
+       @RequestMapping(value="/getflightdetails/{source}/{destination}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+       public List<Schedule> getFlightDetails(@PathVariable("source")String source,@PathVariable("destination")String destination)
+       {
+          int i=0;
+          List<Route> route=routeBo.getBySourceDestination(source, destination);
+          Route r1=route.get(0);
+          List<Flight> flight=flightBo.getAllFlights();
+          List<Flight> flight1=new ArrayList<Flight>();
+           for(Flight f:flight)
+           {
+                 Route r=f.getRoute();
+                 if(r.getRid().equalsIgnoreCase(r1.getRid()))
+                 {
+                     flight1.add(f);
+                 }
+           }
+          List<Schedule> schedule=scheduleBo.getSchedules();
+          List<Schedule> schedule1=new ArrayList<Schedule>();
+          for(Schedule s:schedule)
+          {
+                 Flight f=s.getFlight();
+                 for(Flight f1:flight1)
+                 {
+                       if(f1.getFid().equalsIgnoreCase(f.getFid()))
+                       {
+                              schedule1.add(s);
+                       }
+                 }
+          }
+          return schedule1;    
+
        }
+
+
+       
+}    
 
 
